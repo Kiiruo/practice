@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script defer src="js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+    <script src="https://malsup.github.io/jquery.form.js"></script> 
+    <link rel="shortcut icon" href="img/icon.png">
+ 
+    <script> 
+        // wait for the DOM to be loaded 
+        $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#call-form').ajaxForm(function() { 
+                alert("Спасибо! В скорем времени с вами свяжутся наши агенты"); 
+            }); 
+        }); 
+    </script> 
+</head>
+<style>
+</style>
+<body>
+    <header id="header" class="header">
+        <div class="container header__container">
+            <a href="#" class="logo">
+                <img class="logo__img" src="img/logo.svg" alt="Логотип">
+            </a>
+            <nav class="menu">
+                <ul class="menu__list">
+                    <li class="menu__item">
+                        <p class="menu__number">+7 (904) 835-13-80</p>
+                        <button id="open-modal-btn" class="menu__btn" href="">
+                            Заказать обратный звонок
+                        </button>
+                        <div class="modal" id="call-modal">
+                            <div class="modal-box">
+                                <button id="close-call-modal-btn"> <img src="icons/close.png" alt=""></button>
+                                <h3>Спасибо, что решили выбрать нас!</h3>
+                                <p>Пожалуйста, введите ваше имя и номер телефона, чтобы мы могли созвониться с вами</p>
+                                    <form action="db/call.php" method="post" class="call-form" id="call-form">
+                                        <input type="text" name="name" class="name" placeholder="Имя" required maxlength="30" pattern="^[А-Яа-яЁё]+$"   oninvalid="setCustomValidity('Введите имя на русском языке')">
+                                        <input type="tel" name="tel" class="tel" placeholder="Номер телефона" required minlength="11" maxlength="11" pattern="^8\d{10}$">
+                                        <input type="submit" name="submit" class="btn-submit">
+                                </form>
+                            </div>
+                        </div>
+                        <script defer src="js/call.js"></script>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+<main class="about-us-web">
+    <section>
+    <div class="main container">
+        <h1>О нас</h1>
+        <p>Добро пожаловать в <strong>Туристическое агентство "Альбатрос"</strong>! Мы — команда профессионалов, которая делает всё возможное, чтобы ваши путешествия были комфортными и незабываемыми. Мы знаем, что каждая поездка — это уникальное приключение, и мы готовы вас поддержать на каждом этапе вашего путешествия.</p>
+        
+        <h2>Наша миссия</h2>
+        <p>Наша главная цель — помочь вам открыть для себя мир, предлагая качественные и уникальные туристические решения. Мы стремимся предоставлять нашим клиентам только лучшие предложения, адаптированные под ваши индивидуальные запросы и пожелания.</p>
+        
+        <h2>Наша история</h2>
+        <p>Туристическое агентство "Альбатрос" было основано в 2010 году. С тех пор мы расширили своё присутствие как на российском, так и на международном рынках. Мы гордимся нашей репутацией надежного партнера и стремимся к постоянному развитию.</p>
+        
+        <h2>Наши ценности</h2>
+        <p>Мы придерживаемся следующих принципов:</p>
+        <ul>
+            <li><strong>Клиентоориентированность:</strong> Мы ценим каждого клиента и готовы к индивидуальному подходу.</li>
+            <li><strong>Качество услуг:</strong> Мы работаем только с проверенными партнерами.</li>
+            <li><strong>Прозрачность отношений:</strong> Мы честно сообщаем о всех ценах и условиях.</li>
+            <li><strong>Инновации:</strong> Мы следим за последними трендами и готовы предложить современные решения.</li>
+        </ul>
+        
+        <h2>Наша команда</h2>
+        <p>Наша команда состоит из квалифицированных специалистов с богатым опытом в туристической отрасли. Каждый из нас — это профессионал, который знает, как сделать ваше путешествие по-настоящему особенным. Мы делимся своими знаниями и страстью к путешествиям, чтобы помочь вам найти идеальное направление.</p>
+    
+        <h2>Почему именно мы?</h2>
+        <p>Каждое путешествие, организованное нашей командой, отличается высоким уровнем сервиса и тщательной продуманностью. Мы предлагаем разнообразные маршруты и сами изучаем направления, с которыми работаем. Мы на связи с вами на протяжении всей поездки, чтобы вы могли быть уверены, что всё проходит гладко.</p>
+    
+        <p>Ждем вас в нашем туристическом агентстве, и пусть каждое ваше путешествие станет незабываемым!</p>
+    </div>
+</section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Ссылки</h3>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="booking.php">Подбор тура</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>Телефон: +7 (904) 835-13-80</p>
+                <p>Email: <a href="mailto:info@touragency.com">albatros@mail.ru</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Социальные сети</h3>
+                <a href="#"><img src="icons/telegram.png" alt="Telegram"></a>
+                <a href="#"><img src="icons/vk.png" alt="VK"></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Альбатрос. Все права защищены.</p>
+        </div>
+    </footer>
+</main>
+</body>
+</html>

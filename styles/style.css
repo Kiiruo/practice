@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=M+PLUS+1p&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&family=Geologica:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=M+PLUS+1p&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&family=Geologica:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=M+PLUS+1p&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,100..900;1,100..900&family=Geologica:wght@100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=M+PLUS+1p&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap");
 
 * {
   box-sizing: border-box;
@@ -112,7 +112,7 @@ img {
   transition: all 0.3s ease;
   opacity: 1;
 }
-#close-call-modal-btn{
+#close-call-modal-btn {
   padding: 5px;
   border: none;
   font: inherit;
@@ -123,10 +123,10 @@ img {
   right: 8px;
   transition: all 0.3s ease;
 }
-#close-call-modal-btn:hover{
+#close-call-modal-btn:hover {
   transform: scale(1.2);
 }
-.modal{
+.modal {
   font-family: "Sofia Sans Semi Condensed", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -138,7 +138,7 @@ img {
   width: 100%;
   height: 100vh;
   z-index: 998;
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0, 0, 0, 0.3);
   display: grid;
   align-items: center;
   justify-content: center;
@@ -146,10 +146,10 @@ img {
   box-shadow: 6px 6px 4px 6px rgba(34, 60, 80, 0.2);
   visibility: hidden;
   opacity: 0;
-  transition:opacity 0.4s, visibility 0.4s  ;
+  transition: opacity 0.4s, visibility 0.4s;
 }
 
-.modal-box{
+.modal-box {
   border: 2px solid rgb(255, 174, 23);
   max-width: 500px;
   padding: 45px;
@@ -158,32 +158,31 @@ img {
   margin: 30px 15px;
   box-shadow: 0px 0px 10px 5px rgba(34, 60, 80, 0.44);
   transform: scale(0);
-  transition: transform .6s;
+  transition: transform 0.6s;
 }
 
-.modal.open{
+.modal.open {
   visibility: visible;
   opacity: 1;
 }
 
-
-.modal.open .modal-box{
+.modal.open .modal-box {
   transform: scale(1);
 }
 
-.call-form{
+.call-form {
   display: flex;
   flex-wrap: wrap;
 }
 
-.name{
+.name {
   font-size: 25px;
   margin-bottom: 10px;
 }
-.tel{
+.tel {
   font-size: 25px;
 }
-.btn-submit{
+.btn-submit {
   margin-top: 10px;
   font-size: 25px;
   padding: 0;
@@ -204,7 +203,7 @@ img {
   user-select: none;
 }
 
-.btn-submit:hover{
+.btn-submit:hover {
   padding: 9px;
   font-size: 37px;
   box-shadow: 1px 1px 5px 2px rgba(255, 255, 255, 0.7);
@@ -230,6 +229,7 @@ img {
   font-family: "Geologica", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  transition: all 0.1s ease-in-out;
 }
 
 .attention-title {
@@ -323,74 +323,127 @@ img {
   box-shadow: 1px 1px 5px 2px rgba(255, 255, 255, 0.7);
 }
 
-.info {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  text-align: center;
-  margin-top: 1.5rem;
-  font-family: "Roboto Condensed", serif;
-  font-optical-sizing: auto;
-  font-size: 24px;
-  font-weight: 400;
-  font-style: normal;
-}
-
 .line {
-  opacity: 0.4;
   pointer-events: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 
 /*Сервисы*/
-.heading-title{
+.heading-title {
   text-align: center;
   margin-bottom: 3rem;
   font-size: 3rem;
 }
-.services .box-container{
+.services .box-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: 1.5rem;
 }
-.services .box-container .box-service{
+.services .box-container .box-service {
   padding: 1rem 2rem;
   text-align: center;
-  background-color: #5D9B9B;
+  background-color: #5d9b9bcc;
   cursor: pointer;
   user-select: none;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   border-radius: 15px;
 }
-.services .box-container .box-service:hover{
-  background-color:black;
-  
+.services .box-container .box-service:hover {
+  background-color: black;
 }
-.services .box-container .box-service img{
+.services .box-container .box-service img {
   height: 4rem;
 }
-.services .box-container .box-service h2{
+.services .box-container .box-service h2 {
   color: white;
   font-size: 1.7rem;
   padding-top: 1rem;
 }
+
+/*О нас*/
+.tour-company-card {
+  font-family: "Roboto Condensed", serif;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.705);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 20px;
+  transition: transform 0.2s;
+  margin-bottom: 2rem;
+}
+
+.tour-company-card:hover {
+  transform: translateY(-4px); /* Эффект при наведении */
+}
+
+.card-image {
+  width: 100%; /* Полная ширина для изображения */
+  height: auto; /* Авто высота для сохранения пропорций */
+}
+
+.card-content {
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+  text-align: left; /* Выровнять текст слева */
+}
+
+.card-content h1 {
+  font-size: 2.5rem; /* Увеличенный размер заголовка */
+  margin-bottom: 15px;
+  color: #333; /* Цвет заголовка */
+}
+
+.card-content h2 {
+  font-size: 1.8rem; /* Увеличенный размер подзаголовков */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #555; /* Цвет подзаголовка */
+}
+
+.card-content p {
+  margin-bottom: 15px;
+  line-height: 1.6; /* Увеличить высоту строки для лучшей читаемости */
+  color: #666; /* Цвет текста */
+}
+
+.card-content ul,
+.card-content ol {
+  margin-bottom: 20px;
+  padding-left: 20px; /* Отступ для списков */
+}
+
+.card-button-us {
+  user-select: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: rgb(220, 166, 50); /* Цвет кнопки */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.card-button-us:hover {
+  background-color: rgb(200, 146, 30); /* Цвет кнопки при наведении */
+  transform: scale(1.05); /* Увеличение кнопки */
+}
 /*Свайпер*/
 main {
   min-width: 100vh;
-  background-image:url(/img/background.jpg);
+  background-image: url(/img/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
-
-.main-section {
-  align-items: center;
-  justify-content: center;
+.card-info {
+  font-size: 3rem;
 }
-
 .card-wrapper {
   max-width: 1200px;
   margin: 0 60px 35px;
@@ -400,7 +453,7 @@ main {
 
 .card-info {
   text-align: center;
-  padding: 10px;
+  padding-bottom: 40px;
 }
 
 .card-list .card-item {
@@ -499,7 +552,6 @@ main {
   padding: 20px 0;
 }
 
-
 .card-wrapper .swiper-pagination-bullet {
   height: 13px;
   width: 13px;
@@ -521,22 +573,22 @@ main {
   background-color: #2c3e50;
   color: #ecf0f1;
   padding: 20px 0;
-  text-align: center; /* Центрируем текст */
-  width: 100%; /* Полная ширина футера */
-  position: relative; /* Позволяет установить другие элементы относительно футера */
+  text-align: center;
+  min-width: 100vh;
+  position: relative;
 }
 
 .footer-container {
   display: flex;
-  justify-content: space-between; /* Равномерное распределение секций */
+  justify-content: space-between;
   max-width: 1200px;
-  margin: 0 auto; /* Центрирование контейнера */
-  padding: 0 20px; /* Отступы слева и справа */
+  margin: 0 auto;
+  padding: 0 20px;
   flex-wrap: wrap;
 }
 
 .footer-section {
-  flex: 1; /* Занимает равное пространство */
+  flex: 1;
   min-width: 200px;
   padding: 15px;
 }
@@ -559,12 +611,12 @@ main {
 .footer-section a {
   color: #ecf0f1;
   text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease; /* Переходы для цвета и трансформации */
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer-section a:hover {
-  color: #f39c12; /* Изменение цвета при наведении */
-  transform: scale(1.1); /* Увеличение размера ссылки при наведении */
+  color: #f39c12;
+  transform: scale(1.1);
 }
 
 .footer-bottom {
@@ -572,107 +624,209 @@ main {
   padding: 10px 0;
   background-color: #34495e;
 }
+/*О нас другая страница*/
+.about-us-web {
+  background-image: url(/img/about-us-web-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main {
+  font-family: "Roboto Condensed", serif;
+  font-size: 1.2rem;
+}
+.main h1 {
+  color: #0b6acf;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+.main h2 {
+  color: #064a92;
+  font-size: 2em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.main p {
+  text-shadow: 1px 2px 1px black;
+  color: white;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+.main ul {
+  color: white;
+  margin-bottom: 20px;
+  list-style-type: disc;
+  padding-left: 20px;
+  text-shadow: 1px 2px 1px black;
+}
+.main ul li {
+  color: white;
+  margin-bottom: 10px;
+  text-shadow: 1px 2px 1px black;
+}
 
-@media screen and (max-width: 768px) {
-    .header{
-      position: relative;
-      width: 100%;
-      border: none;
-    }
-    body {
-        padding-top: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    .menu__item {
-        padding-bottom: 10px;
+/*Бронирование*/
+.body-booking{
+  background-image: url(/img/background.jpg);
+}
+.booking {
+  min-width: 100vh;
+  margin-bottom: 2rem;
+}
+.booking #bookingForm {
+  padding: 2rem;
+  background-color: rgba(211, 211, 211, 0.801);
+}
+.booking h1 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  font-size: 3rem;
+  text-align: center;
+}
+.booking #bookingForm .flex {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
 
-    }
+.booking #bookingForm .flex .inputBox {
+  flex: 1 1 41rem;
+}
+.booking #bookingForm .flex .inputBox input {
+  width: 100%;
+  padding: 1rem 1rem;
+  font-size: 1.6rem;
+  color: rgb(83, 83, 83);
+  text-transform: none;
+  margin-top: 1.5rem;
+  transition: all 0.2s ease-in-out;
+}
+.booking #bookingForm .flex .inputBox select {
+  width: 100%;
+  padding: 1rem 1rem;
+  font-size: 1.6rem;
+  color: rgb(83, 83, 83);
+  text-transform: none;
+  margin-top: 1.5rem;
+  transition: all 0.2s ease-in-out;
+}
+.booking #bookingForm .flex .inputBox input:focus {
+  background-color: black;
+  color: white;
+}
+.booking #bookingForm .flex .inputBox input:focus::placeholder {
+  background-color: black;
+  color: rgb(182, 182, 182);
+}
+.booking #bookingForm .flex .inputBox label {
+  font-size: 1.5rem;
+}
+.booking #bookingForm .flex button {
+  background-color: #cf9f19;
+  color: white;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+}
+.booking #bookingForm .flex button:hover{
+  background-color:#836206 ;
+  padding: 30px;
+}
+#php-h2{
+  text-align: center;
+}
+@media screen and (max-width: 430px) {
+  main {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  body {
+    padding: 0;
+  }
+  .header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+  }
+  .header__container {
+    display: flex;
+    flex-flow: column;
+  }
+  .logo__img {
+    width: 100%;
+  }
+  .btn-submit:active {
+    padding: 9px;
+    font-size: 37px;
+    box-shadow: 1px 1px 5px 2px rgba(255, 255, 255, 0.7);
+  }
+  .modal {
+    background: none;
+    box-shadow: none;
+    overflow: hidden !important;
+  }
+  .modal-box {
+    padding: 25px;
+  }
+  .attention {
+    background-attachment: local;
+  }
+  .attention-title {
+    font-size: 1.5rem;
+  }
+  .attention-name {
+    font-size: 2.5rem;
+  }
+  .attention-info {
+    font-size: 1rem;
+  }
+  .attention-text {
+    width: 100vh;
+  }
+  .attention-btn:active {
+    padding: 9px;
+    font-size: 21px;
+    box-shadow: 1px 1px 5px 2px rgba(255, 255, 255, 0.7);
+  }
+  .info {
+    font-size: 1rem;
+  }
+  .heading-title {
+    font-size: 2rem;
+  }
+  .services .box-container .box-service {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .services .box-container .box-service h2 {
+    font-size: 1rem;
+  }
+  .swiper {
+    bottom: 0;
+    width: 100%;
+  }
 
-    .menu__item:not(:last-child) {
-        margin-right: 0;
-    }
+  .card-wrapper {
+    margin: 0 10px 20px;
+  }
 
-    .menu__list {
-        flex-flow: column;
-    }
+  .card-wrapper h1 {
+    font-size: 30px;
+  }
 
-    .menu__item a {
-        opacity: 1;
-    }
-
-    .menu__btn {
-        text-decoration: underline;
-        color: #2d509b;
-        font-size: 20px;
-        transition: all 0.3s ease;
-        opacity: 1;
-    }
-
-    .menu__btn a {
-        font-size: 10px;
-    }
-    .attention {
-      border-top: 3px solid black;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        background-attachment: local;
-    }
-
-    .attention-info {
-        display: flex;
-        justify-content: center;
-    }
-
-    .attention-title {
-        font-size: 30px;
-        padding: 10px;
-    }
-
-    .attention-name {
-        font-size: 50px;
-        padding: 30px;
-    }
-
-    .attention-info {
-        font-size: 15px;
-        display: flex;
-        flex-flow: column;
-        font-weight: 200;
-    }
-
-    .attention-btn {
-        margin-top: 10px;
-        padding: 5px;
-        transition: all 0.3 ease;
-        font-size: 18px;
-    }
-
-    .attention-btn:hover {
-        padding: 5px;
-        font-size: 18px;
-        box-shadow: none;
-    }
-    .attention-btn:active{
-        padding: 9px;
-        font-size: 21px;
-        box-shadow: 1px 1px 5px 2px rgba(255, 255, 255, 0.7);
-    }
-    .swiper {
-        bottom: 0;
-        width: 60%;
-    }
-
-    .card-wrapper {
-        margin: 0 10px 20px;
-    }
-
-    .card-wrapper h1 {
-        font-size: 30px;
-    }
-
-    .card-wrapper .swiper-slide-button {
-        display: none;
-    }
+  .card-wrapper .swiper-slide-button {
+    display: none;
+  }
+  .footer {
+    min-width: 100%;
+  }
+  .booking {
+    min-width: auto;
+  }
 }
