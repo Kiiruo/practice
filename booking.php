@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="footer-section">
                 <h3>Ссылки</h3>
                 <ul>
-                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.php">Главная</a></li>
                     <li><a href="about.html">О нас</a></li>
                 </ul>
             </div>

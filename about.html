@@ -1,113 +1,200 @@
+<?php
+include 'db/connect.php'; // Подключение к базе данных
+
+// Получение списка стран
+$countriesResult = mysqli_query($conn, "SELECT id, name FROM countries");
+$countries = [];
+while ($row = mysqli_fetch_assoc($countriesResult)) {
+    $countries[] = $row;
+}
+
+// Инициализация переменных
+$name = '';
+$phone = '';
+$email = '';
+$country = '';
+$route = '';
+$arrival = '';
+$departure = '';
+$passengers = 1;
+$routePrice = 0;
+
+// Проверка, была ли отправлена форма
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $country = $_POST['country'] ?? '';
+    $route = $_POST['route'] ?? '';
+    $passengers = (int)($_POST['passengers'] ?? 1);
+
+    // Получение цены для выбранного маршрута
+    if ($route) {
+        $route_sql = "SELECT price_per_passenger FROM routes WHERE id = ?";
+        $stmt = $conn->prepare($route_sql);
+        $stmt->bind_param("i", $route);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $routeData = $result->fetch_assoc();
+        $routePrice = $routeData['price_per_passenger'] ?? 0; // Получаем цену
+    }
+}
+
+// Получение маршрутов для выбранной страны (если выбрана)
+$routes = [];
+if ($country) {
+    $routes_sql = "SELECT id, name, price_per_passenger FROM routes WHERE country_id = ?";
+    $stmt = $conn->prepare($routes_sql);
+    $stmt->bind_param("i", $country);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($route_row = $result->fetch_assoc()) {
+        $routes[] = $route_row;
+    }
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>О нас</title>
     <link rel="stylesheet" href="styles/style.css">
-    <script defer src="js/main.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-    <script src="https://malsup.github.io/jquery.form.js"></script> 
     <link rel="shortcut icon" href="img/icon.png">
- 
-    <script> 
-        // wait for the DOM to be loaded 
-        $(document).ready(function() { 
-            // bind 'myForm' and provide a simple callback function 
-            $('#call-form').ajaxForm(function() { 
-                alert("Спасибо! В скорем времени с вами свяжутся наши агенты"); 
-            }); 
-        }); 
-    </script> 
+    <title>Бронирование тура</title>
+    <script defer src="js/main.js"></script>
 </head>
-<style>
-</style>
-<body>
-    <header id="header" class="header">
-        <div class="container header__container">
-            <a href="#" class="logo">
-                <img class="logo__img" src="img/logo.svg" alt="Логотип">
-            </a>
-            <nav class="menu">
-                <ul class="menu__list">
-                    <li class="menu__item">
-                        <p class="menu__number">+7 (904) 835-13-80</p>
-                        <button id="open-modal-btn" class="menu__btn" href="">
-                            Заказать обратный звонок
-                        </button>
-                        <div class="modal" id="call-modal">
-                            <div class="modal-box">
-                                <button id="close-call-modal-btn"> <img src="icons/close.png" alt=""></button>
-                                <h3>Спасибо, что решили выбрать нас!</h3>
-                                <p>Пожалуйста, введите ваше имя и номер телефона, чтобы мы могли созвониться с вами</p>
-                                    <form action="db/call.php" method="post" class="call-form" id="call-form">
-                                        <input type="text" name="name" class="name" placeholder="Имя" required maxlength="30" pattern="^[А-Яа-яЁё]+$"   oninvalid="setCustomValidity('Введите имя на русском языке')">
-                                        <input type="tel" name="tel" class="tel" placeholder="Номер телефона" required minlength="11" maxlength="11" pattern="^8\d{10}$">
-                                        <input type="submit" name="submit" class="btn-submit">
-                                </form>
-                            </div>
+<body class="body-booking">
+<header id="header" class="header">
+    <div class="container header__container">
+        <a href="#" class="logo">
+            <img class="logo__img" src="img/logo.svg" alt="Логотип">
+        </a>
+        <nav class="menu">
+            <ul class="menu__list">
+                <li class="menu__item">
+                    <p class="menu__number">+7 (904) 835-13-80</p>
+                    <button id="open-modal-btn" class="menu__btn">Заказать обратный звонок</button>
+                    <div class="modal" id="call-modal">
+                        <div class="modal-box">
+                            <button id="close-call-modal-btn"><img src="icons/close.png" alt=""></button>
+                            <h3>Спасибо, что решили выбрать нас!</h3>
+                            <p>Пожалуйста, введите ваше имя и номер телефона, чтобы мы могли созвониться с вами</p>
+                            <form action="db/call.php" method="post" class="call-form" id="call-form">
+                                <input type="text" name="name" class="name" placeholder="Имя" required maxlength="30" pattern="^[А-Яа-яЁё]+$" oninvalid="setCustomValidity('Введите имя на русском языке')">
+                                <input type="tel" name="tel" class="tel" placeholder="Номер телефона" required minlength="11" maxlength="11" pattern="^8\d{10}$">
+                                <input type="submit" name="submit" class="btn-submit">
+                            </form>
                         </div>
-                        <script defer src="js/call.js"></script>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-<main class="about-us-web">
-    <section>
-    <div class="main container">
-        <h1>О нас</h1>
-        <p>Добро пожаловать в <strong>Туристическое агентство "Альбатрос"</strong>! Мы — команда профессионалов, которая делает всё возможное, чтобы ваши путешествия были комфортными и незабываемыми. Мы знаем, что каждая поездка — это уникальное приключение, и мы готовы вас поддержать на каждом этапе вашего путешествия.</p>
-        
-        <h2>Наша миссия</h2>
-        <p>Наша главная цель — помочь вам открыть для себя мир, предлагая качественные и уникальные туристические решения. Мы стремимся предоставлять нашим клиентам только лучшие предложения, адаптированные под ваши индивидуальные запросы и пожелания.</p>
-        
-        <h2>Наша история</h2>
-        <p>Туристическое агентство "Альбатрос" было основано в 2010 году. С тех пор мы расширили своё присутствие как на российском, так и на международном рынках. Мы гордимся нашей репутацией надежного партнера и стремимся к постоянному развитию.</p>
-        
-        <h2>Наши ценности</h2>
-        <p>Мы придерживаемся следующих принципов:</p>
-        <ul>
-            <li><strong>Клиентоориентированность:</strong> Мы ценим каждого клиента и готовы к индивидуальному подходу.</li>
-            <li><strong>Качество услуг:</strong> Мы работаем только с проверенными партнерами.</li>
-            <li><strong>Прозрачность отношений:</strong> Мы честно сообщаем о всех ценах и условиях.</li>
-            <li><strong>Инновации:</strong> Мы следим за последними трендами и готовы предложить современные решения.</li>
-        </ul>
-        
-        <h2>Наша команда</h2>
-        <p>Наша команда состоит из квалифицированных специалистов с богатым опытом в туристической отрасли. Каждый из нас — это профессионал, который знает, как сделать ваше путешествие по-настоящему особенным. Мы делимся своими знаниями и страстью к путешествиям, чтобы помочь вам найти идеальное направление.</p>
-    
-        <h2>Почему именно мы?</h2>
-        <p>Каждое путешествие, организованное нашей командой, отличается высоким уровнем сервиса и тщательной продуманностью. Мы предлагаем разнообразные маршруты и сами изучаем направления, с которыми работаем. Мы на связи с вами на протяжении всей поездки, чтобы вы могли быть уверены, что всё проходит гладко.</p>
-    
-        <p>Ждем вас в нашем туристическом агентстве, и пусть каждое ваше путешествие станет незабываемым!</p>
+                    </div>
+                    <script defer src="js/call.js"></script>
+                </li>
+            </ul>
+        </nav>
     </div>
+</header>
+<section class="container booking">
+    <h1>Бронирование тура</h1>
+    <form id="bookingForm" method="POST">
+        <div class="flex">
+            <div class="inputBox">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required value="<?= htmlspecialchars($name) ?>" placeholder="Введите ваше имя" maxlength="30">
+            </div>
+            <div class="inputBox">
+                <label for="phone">Номер телефона:</label>
+                <input type="tel" id="phone" name="phone" required value="<?= htmlspecialchars($phone) ?>" placeholder="Введите ваш номер телефона" minlength="11" maxlength="11" pattern="^8\d{10}$">
+            </div>
+            <div class="inputBox">
+                <label for="email">Почта:</label>
+                <input type="email" id="email" name="email" required value="<?= htmlspecialchars($email) ?>" placeholder="Введите вашу эл. почту" maxlength='50'>
+            </div>
+            <div class="inputBox">
+                <label for="country">Куда вы хотите отправиться:</label>
+                <select id="country" name="country" required onchange="updateRoutes(this.value)">
+                    <option value="">Выберите страну</option>
+                    <?php foreach ($countries as $countryOption): ?>
+                        <option value="<?= htmlspecialchars($countryOption['id']) ?>" <?= $countryOption['id'] == $country ? 'selected' : '' ?>><?= htmlspecialchars($countryOption['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="inputBox">
+                <label for="route">Выбор маршрута:</label>
+                <select id="route" name="route" required>
+                    <option value="">Выберите маршрут</option>
+                    <?php foreach ($routes as $route_row): ?>
+                        <option value="<?= htmlspecialchars($route_row['id']) ?>" <?= $route_row['id'] == $route ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($route_row['name']) ?> - <?= htmlspecialchars($route_row['price_per_passenger']) ?>₽
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="inputBox">
+                <label for="arrival">Дата прибытия:</label>
+                <input type="date" id="arrival" name="arrival" required value="<?= htmlspecialchars($arrival) ?>">
+            </div>
+            <div class="inputBox">
+                <label for="departure">Дата отбытия:</label>
+                <input type="date" id="departure" name="departure" required value="<?= htmlspecialchars($departure) ?>">
+            </div>
+            <div class="inputBox">
+                <label for="passengers">Количество пассажиров:</label>
+                <input type="number" id="passengers" name="passengers" min="1" required value="<?= htmlspecialchars($passengers) ?>" placeholder="Введите число пассажиров">
+            </div>
+            <div class="inputBox">
+                <label for="total-price">Стоимость:</label>
+                <input type="text" id="total-price" name="total-price" readonly value="<?= $routePrice * $passengers ?>₽">
+            </div>
+            <div class="inputBox">
+                <button type="submit">Забронировать</button>
+            </div>
+        </div>
+    </form>
 </section>
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Ссылки</h3>
-                <ul>
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="booking.php">Подбор тура</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Контакты</h3>
-                <p>Телефон: +7 (904) 835-13-80</p>
-                <p>Email: <a href="mailto:info@touragency.com">albatros@mail.ru</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Социальные сети</h3>
-                <a href="#"><img src="icons/telegram.png" alt="Telegram"></a>
-                <a href="#"><img src="icons/vk.png" alt="VK"></a>
-            </div>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>Ссылки</h3>
+            <ul>
+                <li><a href="index.php">Главная</a></li>
+                <li><a href="about.html">О нас</a></li>
+            </ul>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Альбатрос. Все права защищены.</p>
+        <div class="footer-section">
+            <h3>Контакты</h3>
+            <p>Телефон: +7 (904) 835-13-80</p>
+            <p>Email: <a href="mailto:info@touragency.com">albatros@mail.ru</a></p>
         </div>
-    </footer>
-</main>
+        <div class="footer-section">
+            <h3>Социальные сети</h3>
+            <a href="#"><img src="icons/telegram.png" alt="Telegram"></a>
+            <a href="#"><img src="icons/vk.png" alt="VK"></a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Альбатрос. Все права защищены.</p>
+    </div>
+</footer>
+<script>
+function updateRoutes(countryId) {
+    const routeSelect = document.getElementById('route');
+    routeSelect.innerHTML = '<option value="">Загрузка...</option>';
+
+    if (countryId) {
+        fetch(`get_routes.php?country_id=${countryId}`)
+            .then(response => response.json())
+            .then(data => {
+                routeSelect.innerHTML = '<option value="">Выберите маршрут</option>';
+                data.forEach(route => {
+                    const option = document.createElement('option');
+                    option.value = route.id;
+                    option.textContent = `${route.name} - ${route.price_per_passenger}₽`;
+                    routeSelect.appendChild(option);
+                });
+
+                // Установка значения маршрута, если он был выбран
+                if ('<?= htmlspecialchars($route) ?>') {
+                    routeSelect.value = '<?= htmlspecialchars($route) ?>';
+                }
+            });
+    }
+}
+</script>
 </body>
 </html>

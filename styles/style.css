@@ -530,21 +530,21 @@ main {
 }
 
 .card-list .card-link .card-button {
-  height: 35px;
-  width: 35px;
+  text-align: center;
+  font-size: 1.2rem;
   color: #5372f0;
-  border-radius: 50%;
-  margin: 30px 0 5px;
+  border-radius: 10px;
+  margin: 10px 0 5px;
+  padding: 5px;
   background: none;
   cursor: pointer;
   border: 2px solid #5372f0;
-  transform: rotate(-45deg);
   transition: 0.4s ease;
+  text-align: center;
 }
 
-.card-list .card-link:hover .card-button {
-  color: #fff;
-  background: #5372f0;
+.card-list .card-link .card-button:hover {
+  padding: 10px;
 }
 
 .card-wrapper h1 {
@@ -567,6 +567,40 @@ main {
   color: #5372f0;
   margin-top: -35px;
 }
+.card-list .route-select {
+  width: 100%;
+  max-width: 200px;
+  padding: 5px;
+  border-radius: 8px; 
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  -moz-appearance: none;
+  -webkit-appearance: none; 
+  appearance: none;
+}
+.card-list .price {
+  display: inline-block; 
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3085d5;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); 
+}
+.card-list .passenger-count {
+  width: 100%;
+  max-width: 100px;
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
 
 /*Футер*/
 .footer {
@@ -690,16 +724,26 @@ main {
 }
 
 .booking #bookingForm .flex .inputBox {
-  flex: 1 1 41rem;
+  width: 100%;
+  max-width: 200px;
+  padding: 5px;
+  border-radius: 8px; 
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  -moz-appearance: none;
+  -webkit-appearance: none; 
+  appearance: none;
 }
 .booking #bookingForm .flex .inputBox input {
   width: 100%;
-  padding: 1rem 1rem;
-  font-size: 1.6rem;
-  color: rgb(83, 83, 83);
-  text-transform: none;
-  margin-top: 1.5rem;
-  transition: all 0.2s ease-in-out;
+  max-width: 200px;
+  padding: 5px;
+  border-radius: 8px; 
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  -moz-appearance: none;
+  -webkit-appearance: none; 
+  appearance: none;
 }
 .booking #bookingForm .flex .inputBox select {
   width: 100%;
