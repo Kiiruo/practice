@@ -4,7 +4,7 @@ window.addEventListener("scroll", function () {
   const scrollPos = window.scrollY;
   const screenWidth = window.innerWidth;
 
-  if (screenWidth > 768) { 
+  if (screenWidth > 430) { 
     if (scrollPos > 24) {
       headerEl.classList.add("header_mini");
     } else {

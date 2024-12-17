@@ -582,7 +582,7 @@ main {
   display: inline-block; 
   font-size: 1.2rem;
   font-weight: 600;
-  color: #3085d5;
+  color: #30c2d5;
   margin-top: 10px;
   padding: 5px;
   border: 1px solid #ccc;
@@ -600,7 +600,6 @@ main {
   font-size: 1rem;
   margin-top: 10px;
 }
-
 
 /*Футер*/
 .footer {
@@ -724,26 +723,16 @@ main {
 }
 
 .booking #bookingForm .flex .inputBox {
-  width: 100%;
-  max-width: 200px;
-  padding: 5px;
-  border-radius: 8px; 
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  -moz-appearance: none;
-  -webkit-appearance: none; 
-  appearance: none;
+  flex: 1 1 41rem;
 }
 .booking #bookingForm .flex .inputBox input {
   width: 100%;
-  max-width: 200px;
-  padding: 5px;
-  border-radius: 8px; 
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  -moz-appearance: none;
-  -webkit-appearance: none; 
-  appearance: none;
+  padding: 1rem 1rem;
+  font-size: 1.6rem;
+  color: rgb(83, 83, 83);
+  text-transform: none;
+  margin-top: 1.5rem;
+  transition: all 0.2s ease-in-out;
 }
 .booking #bookingForm .flex .inputBox select {
   width: 100%;
