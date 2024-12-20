@@ -105,231 +105,123 @@ function findImageFile($countryName)
                 </div>
             </div>
         </section>
-        <section class="container swiper">
-            <div class="card-wrapper">
-                <!-- Заголовок секции -->
-                <h2 class="card-info">Самые популярные туры</h2>
-                <ul class="card-list swiper-wrapper">
-                    <?php
-                    if ($countries_result->num_rows > 0) {
-                        while ($country_row = $countries_result->fetch_assoc()) {
-                            $country_id = $country_row['id'];
-                            $country_name = $country_row['name'];
-                            $image_path = findImageFile($country_name);
-                            $routes_sql = "SELECT id, name, price_per_passenger FROM routes WHERE country_id = $country_id";
-                            $routes_result = $conn->query($routes_sql);
-                    ?>
-                            <li class="card-item swiper-slide" data-country-id="<?php echo $country_id; ?>">
-                                <a class="card-link">
-                                    <img src="<?php echo $image_path; ?>" alt="<?php echo $country_name; ?>" class="card-image">
-                                    <p class="badge <?php echo strtolower($country_name); ?>"><?php echo $country_name; ?></p>
-                                    <h2 class="card-title">Очень важная информация</h2>
-                                    <select class="route-select" onchange="updatePrice(this)">
-                                        <option value="">Выберите маршрут</option>
-                                        <?php
-                                        if ($routes_result->num_rows > 0) {
-                                            while ($route_row = $routes_result->fetch_assoc()) {
-                                                $route_id = $route_row['id'];
-                                                $route_name = $route_row['name'];
-                                                $route_price = $route_row['price_per_passenger'];
-                                                echo "<option value='$route_id' data-price='$route_price'>$route_name - $route_price₽</option>"; // В валюте "₽"
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <input type="number" min="1" class="passenger-count styled-input" onchange="updatePrice(this)" placeholder="Кол-во" name="passengers">
-                                    <p>Цена: <span class="price">0₽</span></p>
-                                    <button class="request-tour-button" onclick="openModal(this)">Запросить тур</button>
-                                </a>
-                            </li>
-                    <?php
-                        }
-                    } else {
-                        echo "<li>Нет доступных туров</li>";
-                    }
-                    $conn->close();
-                    ?>
-                </ul>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-slide-button swiper-button-prev"></div>
-                <div class="swiper-slide-button swiper-button-next"></div>
+        <section class="container services">
+            <h1 class="heading-title">Мы предлагаем</h1>
+            <div class="box-container">
+                <div class="box-service">
+                    <img src="icons/vacation.png" alt="">
+                    <h2>Лучшие курорты</h2>
+                </div>
+                <div class="box-service">
+                    <img src="icons/hotel.png" alt="">
+                    <h2>Лучшие отели</h2>
+                </div>
+                <div class="box-service">
+                    <img src="icons/memories.png" alt="">
+                    <h2>Незабываемые воспоминания</h2>
+                </div>
+                <div class="box-service">
+                    <img src="icons/price.png" alt="">
+                    <h2>Низкие цены</h2>
+                </div>
             </div>
+            <img src="img/logo_line.png" class="line">
         </section>
+        <section class="container swiper">
+    <div class="card-wrapper">
+        <h2 class="card-info">Самые популярные туры</h2>
+        <ul class="card-list swiper-wrapper">
+            <?php
+            if ($countries_result->num_rows > 0) {
+                while ($country_row = $countries_result->fetch_assoc()) {
+                    $country_id = $country_row['id'];
+                    $country_name = $country_row['name'];
 
-        <!-- Модальное окно -->
-        <div id="requestModal" class="tour-request-modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>Запросить тур</h2>
-                <form id="tour-request-form" method="post" action>
-                    <input type="hidden" name="price" id="modal-price">
-                    <input type="hidden" name="passengers" id="modal-passengers">
-                    <input type="hidden" name="country_id" id="modal-country-id" />
-                    <input type="hidden" name="route_id" id="modal-route-id" />
-                    <label for="name">Имя:</label>
-                    <input type="text" name="name" required maxlength="30" pattern="^[А-Яа-яЁё]+$" oninvalid="setCustomValidity('Введите имя на русском языке')"/>
-                    <label for="phone">Номер телефона:</label>
-                    <input type="tel" name="phone" required maxlength="11"/>
-                    <label for="email">Почта:</label>
-                    <input type="email" name="email" required />
-                    <label for="arrival_date">Дата прибытия:</label>
-                    <input type="date" name="arrival_date" required />
-                    <label for="departure_date">Дата отбытия:</label>
-                    <input type="date" name="departure_date" required />
-                    <button type="submit">Отправить</button>
-                </form>
-                <script>
-                    document.getElementById('tour-request-form').onsubmit = function(event) {
-                        event.preventDefault(); // Остановить стандартное поведение формы
+                    // Получение пути к изображению
+                    $image_path = findImageFile($country_name);
 
-                        const formData = new FormData(this); // Получаем данные формы
+                    // Получение маршрутов для текущей страны
+                    $routes_sql = "SELECT id, name, price_per_passenger FROM routes WHERE country_id = $country_id";
+                    $routes_result = $conn->query($routes_sql);
+            ?>
+                    <li class="card-item swiper-slide">
+                        <a class="card-link">
+                            <img src="<?php echo $image_path; ?>" alt="<?php echo $country_name; ?>" class="card-image">
+                            <p class="badge <?php echo strtolower($country_name); ?>"><?php echo $country_name; ?></p>
+                            <h2 class="card-title">Очень важная информация</h2>
 
-                        fetch('db/submit_request.php', {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then(response => {
-                                return response.text(); // Получаем текст с сервера
-                            })
-                            .then(data => {
-                                alert(data); // Показываем ответ сервера
-                                closeModal(); // Закрываем модальное окно
-                            })
-                            .catch(error => {
-                                console.error('Ошибка:', error); // Логируем ошибки
-                                alert('При отправке запроса произошла ошибка.');
-                            });
-                    };
-                </script>
-            </div>
-        </div>
-        <style>
-            .tour-request-modal {
-                position: fixed;
-                z-index: 1;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgba(0, 0, 0, 0.7);
-                /* Более темный фон для лучшей видимости */
+                            <!-- Выпадающий список маршрутов -->
+                            <select class="route-select" onchange="updatePrice(this)">
+                                <option value="">Выберите маршрут</option>
+                                <?php
+                                if ($routes_result->num_rows > 0) {
+                                    while ($route_row = $routes_result->fetch_assoc()) {
+                                        $route_id = $route_row['id'];
+                                        $route_name = $route_row['name'];
+                                        $route_price = $route_row['price_per_passenger'];
+                                        echo "<option value='$route_id' data-price='$route_price'>$route_name - $route_price₽</option>"; // В валюте "₽"
+                                    }
+                                }
+                                ?>
+                            </select>
+
+                            <!-- Поле ввода количества пассажиров -->
+                            <input type="number" min="1" class="passenger-count styled-input" value="1" onchange="updatePrice(this)">
+
+                            <p>Цена: <span class="price">0₽</span></p> <!-- Изначально цена 0₽ -->
+
+                            <button class="card-button" onclick="submitBookingForm('<?php echo $country_id; ?>', '');">Забронировать!</button>
+                        </a>
+                    </li>
+            <?php
+                }
+            } else {
+                echo "<li>Нет доступных туров</li>";
             }
-
-            .modal-content {
-                background-color: #ffffff;
-                /* Белый фон */
-                margin: 10% auto;
-                /* Увеличиваем отступ сверху */
-                padding: 25px;
-                /* Увеличиваем внутренние отступы */
-                border-radius: 10px;
-                /* Сглаженные углы */
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-                /* Тень для лучшего эффекта */
-                width: 90%;
-                /* Ширина 90% */
-                max-width: 500px;
-                /* Максимальная ширина */
-                position: relative;
-                /* Для позиционирования закрывающего элемента */
-            }
-
-            .close {
-                color: #ff0000;
-                /* Красный цвет для крестика */
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-
-            .close:hover,
-            .close:focus {
-                color: #c00;
-                /* Цвет при наведении */
-            }
-
-            h2 {
-                margin: 0;
-                /* Убираем отступы */
-                font-size: 1.5em;
-                /* Размер заголовка */
-                text-align: center;
-                /* По центру */
-            }
-
-            form label {
-                display: block;
-                /* Каждая метка занимает всю ширину */
-                margin: 10px 0 5px;
-                /* Отступы */
-                font-weight: bold;
-                /* Жирный текст */
-            }
-
-            form input[type="text"],
-            form input[type="tel"],
-            form input[type="email"],
-            form input[type="date"] {
-                width: 100%;
-                /* Полная ширина */
-                padding: 10px;
-                /* Внутренние отступы */
-                border: 1px solid #ccc;
-                /* Цвет рамки */
-                border-radius: 5px;
-                /* Сглаженные углы */
-                box-sizing: border-box;
-                /* Учет внутренних отступов в ширине */
-                margin-bottom: 15px;
-                /* Отступ между полями */
-                transition: border-color 0.3s;
-                /* Плавный переход */
-            }
-
-            form input[type="text"]:focus,
-            form input[type="tel"]:focus,
-            form input[type="email"]:focus,
-            form input[type="date"]:focus {
-                border-color: #007bff;
-                /* Синий цвет рамки при фокусе */
-                outline: none;
-                /* Убираем обводку */
-            }
-
-            .submit-button {
-                background-color: #007bff;
-                /* Синий цвет фона кнопки */
-                color: white;
-                /* Белый цвет текста */
-                border: none;
-                /* Без рамки */
-                border-radius: 5px;
-                /* Сглаженные углы */
-                padding: 10px 15px;
-                /* Внутренние отступы */
-                cursor: pointer;
-                /* Указатель курсора */
-                font-size: 16px;
-                /* Размер текста */
-                width: 100%;
-                /* Полная ширина */
-                transition: background-color 0.3s;
-                /* Плавный переход цвета фона */
-            }
-
-            /* Эффект при наведении на кнопку */
-            .submit-button:hover {
-                background-color: #0056b3;
-                /* Более темный цвет фона */
-            }
-        </style>
+            $conn->close();
+            ?>
+        </ul>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-slide-button swiper-button-prev"></div>
+        <div class="swiper-slide-button swiper-button-next"></div>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="js/swiper.js"></script>
-        <script src="js/price.js"> </script>
-        <script src="js/openmodal.js"> </script>
-        <script src="js/closemodal.js"> </script>
+        <script>
+            function updatePrice(element) {
+                const cardItem = element.closest('.card-item');
+                const routeSelect = cardItem.querySelector('.route-select');
+                const passengerCount = cardItem.querySelector('.passenger-count');
+                const priceDisplay = cardItem.querySelector('.price');
+
+                const routePrice = parseFloat(routeSelect.selectedOptions[0].dataset.price) || 0;
+                const count = parseInt(passengerCount.value);
+                const totalPrice = routePrice * count;
+
+                priceDisplay.innerText = `${totalPrice}₽`;
+            }
+        </script>
+       <script>
+function submitBookingForm(countryId, routeId) {
+    const cardItem = event.target.closest('.card-item');
+    const passengerCount = cardItem.querySelector('.passenger-count').value;
+
+    const bookingForm = document.createElement('form');
+    bookingForm.method = 'POST';
+    bookingForm.action = 'booking.php';
+
+    // Добавим поля для отправки
+    bookingForm.innerHTML = `
+        <input type="hidden" name="country" value="${countryId}">
+        <input type="hidden" name="route" value="${routeId || ''}">
+        <input type="hidden" name="passengers" value="${passengerCount}">
+    `;
+    document.body.appendChild(bookingForm);
+    bookingForm.submit();
+}
+</script>
+
+    </div>
+</section>
     </main>
     <footer class="footer">
         <div class="footer-container">
