@@ -571,15 +571,15 @@ main {
   width: 100%;
   max-width: 200px;
   padding: 5px;
-  border-radius: 8px; 
+  border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   -moz-appearance: none;
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
   appearance: none;
 }
 .card-list .price {
-  display: inline-block; 
+  display: inline-block;
   font-size: 1.2rem;
   font-weight: 600;
   color: #30c2d5;
@@ -588,7 +588,7 @@ main {
   border: 1px solid #ccc;
   border-radius: 8px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(255, 255, 255, 0.8);
 }
 .card-list .passenger-count {
   width: 100%;
@@ -698,8 +698,10 @@ main {
 }
 
 /*Бронирование*/
-.body-booking{
+.body-booking {
   background-image: url(/img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .booking {
   min-width: 100vh;
@@ -708,6 +710,7 @@ main {
 .booking #bookingForm {
   padding: 2rem;
   background-color: rgba(211, 211, 211, 0.801);
+  border-radius: 10px;
 }
 .booking h1 {
   padding-top: 2rem;
@@ -765,11 +768,11 @@ main {
   transition: all 0.2s ease;
   border-radius: 10px;
 }
-.booking #bookingForm .flex button:hover{
-  background-color:#836206 ;
+.booking #bookingForm .flex button:hover {
+  background-color: #836206;
   padding: 30px;
 }
-#php-h2{
+#php-h2 {
   text-align: center;
 }
 @media screen and (max-width: 430px) {

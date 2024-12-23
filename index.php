@@ -33,12 +33,11 @@ function findImageFile($countryName)
     <script defer src="js/main.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
-
     <script>
         // wait for the DOM to be loaded 
-        $(document).ready(function() {
+        $(document).ready(function () {
             // bind 'myForm' and provide a simple callback function 
-            $('#call-form').ajaxForm(function() {
+            $('#call-form').ajaxForm(function () {
                 alert("Спасибо! В скорем времени с вами свяжутся наши агенты");
             });
         });
@@ -48,24 +47,23 @@ function findImageFile($countryName)
 <body>
     <header id="header" class="header">
         <div class="container header__container">
-            <a href="#" class="logo">
-                <img class="logo__img" src="img/logo.svg" alt="Логотип">
-            </a>
+            <a href="#" class="logo"> <img class="logo__img" src="img/logo.svg" alt="Логотип"> </a>
             <nav class="menu">
                 <ul class="menu__list">
                     <li class="menu__item">
                         <p class="menu__number">+7 (904) 835-13-80</p>
-                        <button id="open-modal-btn" class="menu__btn" href="">
-                            Заказать обратный звонок
-                        </button>
+                        <button id="open-modal-btn" class="menu__btn" href=""> Заказать обратный звонок </button>
                         <div class="modal" id="call-modal">
                             <div class="modal-box">
                                 <button id="close-call-modal-btn"> <img src="icons/close.png" alt=""></button>
                                 <h3>Спасибо, что решили выбрать нас!</h3>
                                 <p>Пожалуйста, введите ваше имя и номер телефона, чтобы мы могли созвониться с вами</p>
                                 <form action="db/call.php" method="post" class="call-form" id="call-form">
-                                    <input type="text" name="name" class="name" placeholder="Имя" required maxlength="30" pattern="^[А-Яа-яЁё]+$" oninvalid="setCustomValidity('Введите имя на русском языке')">
-                                    <input type="tel" name="tel" class="tel" placeholder="Номер телефона" required minlength="11" maxlength="11" pattern="^8\d{10}$">
+                                    <input type="text" name="name" class="name" placeholder="Имя" required
+                                        maxlength="30" pattern="^[А-Яа-яЁё]+$"
+                                        oninvalid="setCustomValidity('Введите имя на русском языке')">
+                                    <input type="tel" name="tel" class="tel" placeholder="Номер телефона" required
+                                        minlength="11" maxlength="11" pattern="^8\d{10}$">
                                     <input type="submit" name="submit" class="btn-submit">
                                 </form>
                             </div>
@@ -76,12 +74,12 @@ function findImageFile($countryName)
             </nav>
         </div>
     </header>
-
     <main>
         <section class="attention">
             <div class="attention-text"></div>
             <h3 class="attention-title">Самые лучшие курорты только у</h3>
-            <h1 class="attention-name"> <img class="flag1" src="img/flag.png" alt="">АЛЬБАТРОС<img class="flag2" src="img/flag.png" alt=""></h1>
+            <h1 class="attention-name"> <img class="flag1" src="img/flag.png" alt="">АЛЬБАТРОС<img class="flag2"
+                    src="img/flag.png" alt=""></h1>
             <div class="attention-info">
                 <p>Быстрый подбор подходящего для вас тура БЕСПЛАТНО</p>
                 <a href="booking.php"><button class="attention-btn">ПОДОБРАТЬ ТУР</button></a>
@@ -92,7 +90,8 @@ function findImageFile($countryName)
             <div class="tour-company-card">
                 <div class="card-content">
                     <h1>Туристическое агенство "Альбатрос"</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dolore maxime laboriosam doloribus quos ex. Dolores aut eius dicta numquam tempore iste ad, id saepe.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dolore maxime laboriosam
+                        doloribus quos ex. Dolores aut eius dicta numquam tempore iste ad, id saepe.</p>
                     <h2>Почему выбирают нас:</h2>
                     <ol>
                         <li>Опытные специалисты с многолетним стажем.</li>
@@ -100,7 +99,6 @@ function findImageFile($countryName)
                         <li>Гарантия низких цен и высокого качества услуг.</li>
                         <li>Доступ ко всем актуальным турпакетам и предложениям.</li>
                     </ol>
-
                     <a href="about.html" class="card-button-us">Узнать больше</a>
                 </div>
             </div>
@@ -128,100 +126,76 @@ function findImageFile($countryName)
             <img src="img/logo_line.png" class="line">
         </section>
         <section class="container swiper">
-    <div class="card-wrapper">
-        <h2 class="card-info">Самые популярные туры</h2>
-        <ul class="card-list swiper-wrapper">
-            <?php
-            if ($countries_result->num_rows > 0) {
-                while ($country_row = $countries_result->fetch_assoc()) {
-                    $country_id = $country_row['id'];
-                    $country_name = $country_row['name'];
-
-                    // Получение пути к изображению
-                    $image_path = findImageFile($country_name);
-
-                    // Получение маршрутов для текущей страны
-                    $routes_sql = "SELECT id, name, price_per_passenger FROM routes WHERE country_id = $country_id";
-                    $routes_result = $conn->query($routes_sql);
-            ?>
-                    <li class="card-item swiper-slide">
-                        <a class="card-link">
-                            <img src="<?php echo $image_path; ?>" alt="<?php echo $country_name; ?>" class="card-image">
-                            <p class="badge <?php echo strtolower($country_name); ?>"><?php echo $country_name; ?></p>
-                            <h2 class="card-title">Очень важная информация</h2>
-
-                            <!-- Выпадающий список маршрутов -->
-                            <select class="route-select" onchange="updatePrice(this)">
-                                <option value="">Выберите маршрут</option>
-                                <?php
-                                if ($routes_result->num_rows > 0) {
-                                    while ($route_row = $routes_result->fetch_assoc()) {
-                                        $route_id = $route_row['id'];
-                                        $route_name = $route_row['name'];
-                                        $route_price = $route_row['price_per_passenger'];
-                                        echo "<option value='$route_id' data-price='$route_price'>$route_name - $route_price₽</option>"; // В валюте "₽"
-                                    }
-                                }
-                                ?>
-                            </select>
-
-                            <!-- Поле ввода количества пассажиров -->
-                            <input type="number" min="1" class="passenger-count styled-input" value="1" onchange="updatePrice(this)">
-
-                            <p>Цена: <span class="price">0₽</span></p> <!-- Изначально цена 0₽ -->
-
-                            <button class="card-button" onclick="submitBookingForm('<?php echo $country_id; ?>', '');">Забронировать!</button>
-                        </a>
-                    </li>
-            <?php
-                }
-            } else {
-                echo "<li>Нет доступных туров</li>";
-            }
-            $conn->close();
-            ?>
-        </ul>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-slide-button swiper-button-prev"></div>
-        <div class="swiper-slide-button swiper-button-next"></div>
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        <script src="js/swiper.js"></script>
-        <script>
-            function updatePrice(element) {
-                const cardItem = element.closest('.card-item');
-                const routeSelect = cardItem.querySelector('.route-select');
-                const passengerCount = cardItem.querySelector('.passenger-count');
-                const priceDisplay = cardItem.querySelector('.price');
-
-                const routePrice = parseFloat(routeSelect.selectedOptions[0].dataset.price) || 0;
-                const count = parseInt(passengerCount.value);
-                const totalPrice = routePrice * count;
-
-                priceDisplay.innerText = `${totalPrice}₽`;
-            }
-        </script>
-       <script>
-function submitBookingForm(countryId, routeId) {
-    const cardItem = event.target.closest('.card-item');
-    const passengerCount = cardItem.querySelector('.passenger-count').value;
-
-    const bookingForm = document.createElement('form');
-    bookingForm.method = 'POST';
-    bookingForm.action = 'booking.php';
-
-    // Добавим поля для отправки
-    bookingForm.innerHTML = `
-        <input type="hidden" name="country" value="${countryId}">
-        <input type="hidden" name="route" value="${routeId || ''}">
-        <input type="hidden" name="passengers" value="${passengerCount}">
-    `;
-    document.body.appendChild(bookingForm);
-    bookingForm.submit();
-}
-</script>
-
-    </div>
-</section>
+            <div class="card-wrapper">
+                <h2 class="card-info">Самые популярные туры</h2>
+                <ul class="card-list swiper-wrapper">
+                    <?php
+                    if ($countries_result->num_rows > 0) {
+                        while ($country_row = $countries_result->fetch_assoc()) {
+                            $country_id = $country_row['id'];
+                            $country_name = $country_row['name'];
+                            $image_path = findImageFile($country_name);
+                            $routes_sql = "SELECT id, name, price_per_passenger FROM routes WHERE country_id = $country_id";
+                            $routes_result = $conn->query($routes_sql);
+                            ?>
+                            <li class="card-item swiper-slide">
+                                <a class="card-link">
+                                    <img src="<?php echo $image_path; ?>" alt="<?php echo $country_name; ?>" class="card-image">
+                                    <p class="badge <?php echo strtolower($country_name); ?>">
+                                        <?php echo $country_name; ?>
+                                    </p>
+                                    <h2 class="card-title">Очень важная информация</h2>
+                                    <select class="route-select" onchange="updatePrice(this)">
+                                        <option value="">Выберите маршрут</option>
+                                        <?php
+                                        if ($routes_result->num_rows > 0) {
+                                            while ($route_row = $routes_result->fetch_assoc()) {
+                                                $route_id = $route_row['id'];
+                                                $route_name = $route_row['name'];
+                                                $route_price = $route_row['price_per_passenger'];
+                                                echo "<option value='$route_id' data-price='$route_price'>$route_name - $route_price₽</option>"; // В валюте "₽"
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                    <input type="number" min="1" class="passenger-count styled-input" value="1"
+                                        onchange="updatePrice(this)">
+                                    <p>Цена: <span class="price">0₽</span></p>
+                                    <button class="card-button" onclick="submitBookingForm('');">Забронировать!</button>
+                                </a>
+                            </li>
+                            <?php
+                        }
+                    } else {
+                        echo "<li>Нет доступных туров</li>";
+                    }
+                    $conn->close();
+                    ?>
+                </ul>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-slide-button swiper-button-prev"></div>
+                <div class="swiper-slide-button swiper-button-next"></div>
+                <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+                <script src="js/swiper.js"></script>
+                <script>
+                    function updatePrice(element) {
+                        const cardItem = element.closest('.card-item');
+                        const routeSelect = cardItem.querySelector('.route-select');
+                        const passengerCount = cardItem.querySelector('.passenger-count');
+                        const priceDisplay = cardItem.querySelector('.price');
+                        const routePrice = parseFloat(routeSelect.selectedOptions[0].dataset.price) || 0;
+                        const count = parseInt(passengerCount.value);
+                        const totalPrice = routePrice * count;
+                        priceDisplay.innerText = `${totalPrice}₽`;
+                    }
+                </script>
+                <script>
+                    function submitBookingForm(countryId, routeId) {
+                        window.location.href = 'booking.php';
+                    }
+                </script>
+            </div>
+        </section>
     </main>
     <footer class="footer">
         <div class="footer-container">
@@ -247,7 +221,6 @@ function submitBookingForm(countryId, routeId) {
             <p>&copy; 2024 Альбатрос. Все права защищены.</p>
         </div>
     </footer>
-
 </body>
 
 </html>

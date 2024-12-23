@@ -1,8 +1,8 @@
 <?php
-$servername = 'asd';
+$servername = 'practice-main';
 $username = 'root';
 $password = '';
-$dbname = 'tour-agency';
+$dbname = 'tour_agency';
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
