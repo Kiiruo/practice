@@ -1,5 +1,6 @@
 <?php
 include 'db/connect.php';
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $route_id = isset($_POST['route_id']) ? (int)$_POST['route_id'] : null;
@@ -7,23 +8,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $route_name = $conn->real_escape_string($_POST['route_name']);
     $price_per_passenger = (float)$_POST['price_per_passenger'];
 
-    // Обработка загруженного изображения
-    $imageFileName = null; // Инициализируем переменную для имени файла
+    // Инициализация переменной для имени файла изображения
+    $imageFileName = null;
 
+    // Обработка загруженного изображения
     if (isset($_FILES['route_image']) && $_FILES['route_image']['error'] === UPLOAD_ERR_OK) {
         $imageFileType = strtolower(pathinfo($_FILES['route_image']['name'], PATHINFO_EXTENSION));
         $imageFileName = strtolower(str_replace(' ', '_', $country_name)) . '.' . $imageFileType;
         $targetDirectory = 'img/';
-        // Загрузка файла
-        if (!move_uploaded_file($_FILES['route_image']['tmp_name'], to: $targetDirectory . $imageFileName)) {
+        
+        // Переместить загруженный файл
+        if (!move_uploaded_file($_FILES['route_image']['tmp_name'], $targetDirectory . $imageFileName)) {
             echo "Ошибка при загрузке изображения.";
             exit; // Завершаем выполнение, если не удалось загрузить изображение
-        } else {
-            echo "Изображение успешно загружено: $imageFileName<br>";
         }
-    } else {
-        echo "Ошибка: Укажите изображение для загрузки.";
-        exit; // Завершаем выполнение, если изображение не загружено
     }
 
     // Сначала проверяем, существует ли страна
@@ -35,14 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Страна существует, получаем её id
             $country_row = $country_result->fetch_assoc();
             $country_id = $country_row['id'];
-            echo "Страна найдена: $country_name (ID: $country_id)<br>";
         } else {
             // Если страны нет, добавляем её в таблицу countries
             $insert_country_sql = "INSERT INTO countries (name) VALUES ('$country_name')";
-            
             if ($conn->query($insert_country_sql) === TRUE) {
                 $country_id = $conn->insert_id; // Получаем id новой страны
-                echo "Страна успешно добавлена: $country_name (ID: $country_id)<br>";
             } else {
                 echo "Ошибка добавления страны: " . $conn->error;
                 exit;
@@ -53,13 +48,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    // Вставка данных маршрута в таблицу routes
+    // Вставка или обновление данных маршрута в таблицу routes
+    $sql = "";
     if ($route_id) {
         // Обновление существующего маршрута
-        $sql = "UPDATE routes SET country_id='$country_id', name='$route_name', price_per_passenger='$price_per_passenger' WHERE id=$route_id";
+        if ($imageFileName) {
+            // Если изображение загружено, обновляем вместе с изображением
+            $sql = "UPDATE routes SET country_id='$country_id', name='$route_name', price_per_passenger='$price_per_passenger', route_image='$imageFileName' WHERE id=$route_id";
+        } else {
+            // Если изображение не загружено, не обновляем поле изображения
+            $sql = "UPDATE routes SET country_id='$country_id', name='$route_name', price_per_passenger='$price_per_passenger' WHERE id=$route_id";
+        }
     } else {
         // Создание нового маршрута
-        $sql = "INSERT INTO routes (country_id, name, price_per_passenger) VALUES ('$country_id', '$route_name', '$price_per_passenger')";
+        $sql = "INSERT INTO routes (country_id, name, price_per_passenger, route_image) VALUES ('$country_id', '$route_name', '$price_per_passenger', '$imageFileName')";
     }
 
     if ($conn->query($sql) === TRUE) {

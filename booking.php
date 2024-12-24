@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($routeData) {
         $pricePerPassenger = $routeData['price_per_passenger'];
         $totalPrice = $pricePerPassenger * $passengers;
-        $stmt = mysqli_prepare($conn, "INSERT INTO `bookings` (name, phone, email, country_id, route_id, arrival_date, departure_date, passengers, total_price) VALUES ('$name','$phone','$email','$country','$route','$arrival','$departure','$passengers','$totalPrice')");
+        $stmt = mysqli_prepare($conn, "INSERT INTO bookings (name, phone, email, route_id, arrival_date, departure_date, passengers, total_price) VALUES ('$name','$phone','$email','$route','$arrival','$departure','$passengers','$totalPrice')");
         mysqli_stmt_execute($stmt);
 
         echo "<h2 style ='text-align:center;'>Ваш заказ успешно оформлен!</h2>";
