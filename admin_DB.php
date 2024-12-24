@@ -54,14 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Обновление существующего маршрута
         if ($imageFileName) {
             // Если изображение загружено, обновляем вместе с изображением
-            $sql = "UPDATE routes SET country_id='$country_id', name='$route_name', price_per_passenger='$price_per_passenger', route_image='$imageFileName' WHERE id=$route_id";
+            $sql = "UPDATE routes SET country_id='$country_id', name='$route_name', price_per_passenger='$price_per_passenger', WHERE id=$route_id";
         } else {
             // Если изображение не загружено, не обновляем поле изображения
             $sql = "UPDATE routes SET country_id='$country_id', name='$route_name', price_per_passenger='$price_per_passenger' WHERE id=$route_id";
         }
     } else {
         // Создание нового маршрута
-        $sql = "INSERT INTO routes (country_id, name, price_per_passenger, route_image) VALUES ('$country_id', '$route_name', '$price_per_passenger', '$imageFileName')";
+        $sql = "INSERT INTO routes (country_id, name, price_per_passenger) VALUES ('$country_id', '$route_name', '$price_per_passenger')";
     }
 
     if ($conn->query($sql) === TRUE) {
