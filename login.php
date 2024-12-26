@@ -1,22 +1,19 @@
 <?php
-session_start(); // Начинаем сессию
-
-// Простое имя пользователя и пароль (можно заменить на данные из базы данных)
+session_start();
 $valid_username = "admin";
-$valid_password = "password"; // В реальных приложениях используйте хэширование паролей
+$valid_password = "password";
 
 // Обработка формы входа
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Проверка на корректность логина и пароля
     if ($username === $valid_username && $password === $valid_password) {
-        $_SESSION['loggedin'] = true; // Устанавливаем флаг успешного входа
-        header("Location: admin.php"); // Перенаправляем на админ панель
+        $_SESSION['loggedin'] = true;
+        header("Location: admin.php");
         exit;
     } else {
-        $error_message = "Неправильное имя пользователя или пароль."; // Сообщение об ошибке
+        $error_message = "Неправильное имя пользователя или пароль.";
     }
 }
 ?>

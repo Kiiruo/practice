@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </header>
     <section class="container booking">
-        <h1>Бронирование тура</h1>
+        <h1 class="booking-h1">Бронирование тура</h1>
         <form id="bookingForm" method="POST">
             <div class="flex">
                 <div class="inputBox">

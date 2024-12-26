@@ -712,7 +712,7 @@ main {
   background-color: rgba(211, 211, 211, 0.801);
   border-radius: 10px;
 }
-.booking h1 {
+.booking-h1{
   padding-top: 2rem;
   padding-bottom: 2rem;
   font-size: 3rem;
@@ -863,6 +863,10 @@ main {
     min-width: 100%;
   }
   .booking {
-    min-width: auto;
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .booking-h1{
+    font-size: 1.5rem;
   }
 }

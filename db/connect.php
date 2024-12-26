@@ -2,7 +2,7 @@
 $servername = 'practice-main';
 $username = 'root';
 $password = '';
-$dbname = 'tour_agency';
+$dbname = 'tour-agency';
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 

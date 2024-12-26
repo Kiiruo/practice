@@ -11,4 +11,4 @@ function changeBackground() {
     attentionSection.style.backgroundImage = `url(${backgrounds[currentIndex]})`;
 }
 
-setInterval(changeBackground, 3000); // Менять фон каждые 3 секунды
+setInterval(changeBackground, 3000);

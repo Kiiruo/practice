@@ -1,7 +1,6 @@
 <?php
 include 'connect.php';
 
-// Получаем маршруты из базы данных
 $sql = "SELECT r.id, r.name, r.price_per_passenger, c.name AS country_name 
         FROM routes r 
         JOIN countries c ON r.country_id = c.id";

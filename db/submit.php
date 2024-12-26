@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $departure = $_POST['departure'];
     $passengers = (int)$_POST['passengers'];
 
-    // Получение цены за пассажира для выбранного маршрута
     $stmt = mysqli_prepare($conn, "SELECT price_per_passenger FROM routes WHERE id = ?");
     mysqli_stmt_bind_param($stmt, "i", $route);
     mysqli_stmt_execute($stmt);

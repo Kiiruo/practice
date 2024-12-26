@@ -1,5 +1,5 @@
 <?php
-include 'connect.php'; // Подключение к базе данных
+include 'connect.php';
 if (isset($_GET['country_id'])) {
     $country_id = (int)$_GET['country_id'];
 

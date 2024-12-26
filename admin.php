@@ -1,6 +1,10 @@
 <?php
-include 'db/connect.php';
 session_start();
+include 'db/connect.php';
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php"); // Перенаправляем на страницу входа
+    exit;
+}
 
 $callers_sql = "SELECT * FROM callers";
 $callers_result = $conn->query($callers_sql);
@@ -35,14 +39,12 @@ $bookings_result = $conn->query($bookings_sql);
         .callers-container {
             text-align: center;
             max-width: 300px;
-            /* Ширина колонки с вызовами */
             margin-left: 20px;
             background-color: #f9f9f9;
             padding: 15px;
             border-radius: 5px;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
             float: right;
-            /* Расположение справа */
         }
 
         h1 {
@@ -66,7 +68,6 @@ $bookings_result = $conn->query($bookings_sql);
 
         .main-content {
             overflow: hidden;
-            /* Решает возможные переполнения */
         }
 
         #list-group-item {
@@ -103,7 +104,7 @@ $bookings_result = $conn->query($bookings_sql);
                     }
                     ?>
                 </ul>
-                <h2>Добавить/Изменить Маршрут</h2>
+                <h2>Добавить маршрут</h2>
                 <form id="tour-form" method="POST" action="admin_DB.php" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="country_name">Страна:</label>
@@ -132,7 +133,6 @@ $bookings_result = $conn->query($bookings_sql);
                 </form>
             </div>
 
-            <!-- Панель с желающими обратного звонка -->
             <div class="callers-container">
                 <h3>Обратные звонки</h3>
                 <ul class="list-group" id="call">
@@ -208,7 +208,6 @@ $bookings_result = $conn->query($bookings_sql);
             <?php endif; ?>
         </tbody>
     </table>
-    <!-- Модальное окно для редактирования маршрута -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -249,7 +248,7 @@ $bookings_result = $conn->query($bookings_sql);
             document.getElementById('edit_country_name').value = countryName;
             document.getElementById('edit_route_name').value = routeName;
             document.getElementById('edit_price_per_passenger').value = price;
-            $('#editModal').modal('show'); // Показать модальное окно
+            $('#editModal').modal('show');
         }
 
         function updateRoute() {
@@ -264,12 +263,12 @@ $bookings_result = $conn->query($bookings_sql);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     alert(xhr.responseText);
-                    location.reload(); // Перезагружаем страницу для обновления данных
+                    location.reload();
                 }
             };
             xhr.send("route_id=" + routeId + "&country_name=" + encodeURIComponent(countryName) +
                 "&route_name=" + encodeURIComponent(routeName) + "&price_per_passenger=" + price);
-            $('#editModal').modal('hide'); // Скрыть модальное окно после обновления
+            $('#editModal').modal('hide');
         }
 
         function deleteRoute(routeId) {
@@ -280,7 +279,7 @@ $bookings_result = $conn->query($bookings_sql);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         alert(xhr.responseText);
-                        location.reload(); // Перезагрузить страницу
+                        location.reload();
                     }
                 };
                 xhr.send("route_id=" + routeId);
@@ -296,5 +295,5 @@ $bookings_result = $conn->query($bookings_sql);
 </html>
 
 <?php
-$conn->close(); // Закрываем соединение с базой данных
+$conn->close();
 ?>
