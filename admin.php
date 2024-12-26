@@ -9,7 +9,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 $callers_sql = "SELECT * FROM callers";
 $callers_result = $conn->query($callers_sql);
 
-
 $routes_sql = "SELECT routes.id, routes.name, routes.price_per_passenger, countries.name AS country_name 
                FROM routes JOIN countries ON routes.country_id = countries.id";
 $routes_result = $conn->query($routes_sql);
@@ -118,8 +117,7 @@ $bookings_result = $conn->query($bookings_sql);
 
                     <div class="form-group">
                         <label for="price_per_passenger">Цена за пассажира:</label>
-                        <input type="number" class="form-control" id="price_per_passenger" name="price_per_passenger"
-                            required>
+                        <input type="number" class="form-control" id="price_per_passenger" name="price_per_passenger" required>
                     </div>
 
                     <div class="form-group">
@@ -139,11 +137,9 @@ $bookings_result = $conn->query($bookings_sql);
                     <?php if ($callers_result && $callers_result->num_rows > 0): ?>
                         <?php while ($caller = $callers_result->fetch_assoc()): ?>
                             <li class="list-group-item">
-                                <strong>
-                                    <?php echo htmlspecialchars($caller['name']); ?>
-                                </strong><br>
-                                Телефон:
-                                <?php echo htmlspecialchars($caller['telephone']); ?>
+                                <strong><?php echo htmlspecialchars($caller['name']); ?></strong><br>
+                                Телефон: <?php echo htmlspecialchars($caller['telephone']); ?>
+                                <button class='btn btn-danger btn-sm' onclick='deleteCaller(<?php echo $caller["id"]; ?>);'>Удалить</button>
                             </li>
                         <?php endwhile; ?>
                     <?php else: ?>
@@ -153,6 +149,7 @@ $bookings_result = $conn->query($bookings_sql);
             </div>
         </div>
     </div>
+
     <h2 style="text-align:center">Бронирования</h2>
     <table class="table table-bordered">
         <thead>
@@ -166,50 +163,36 @@ $bookings_result = $conn->query($bookings_sql);
                 <th>Дата отъезда</th>
                 <th>Пассажиры</th>
                 <th>Итоговая цена</th>
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
             <?php if ($bookings_result && $bookings_result->num_rows > 0): ?>
                 <?php while ($booking = $bookings_result->fetch_assoc()): ?>
                     <tr>
+                        <td><?php echo htmlspecialchars($booking['id']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['name']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['phone']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['email']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['route_name']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['arrival_date']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['departure_date']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['passengers']); ?></td>
+                        <td><?php echo htmlspecialchars($booking['total_price']); ?> руб.</td>
                         <td>
-                            <?php echo htmlspecialchars($booking['id']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['name']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['phone']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['email']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['route_name']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['arrival_date']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['departure_date']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['passengers']); ?>
-                        </td>
-                        <td>
-                            <?php echo htmlspecialchars($booking['total_price']); ?> руб.
+                            <button class='btn btn-danger btn-sm' onclick='deleteBooking(<?php echo $booking["id"]; ?>);'>Удалить</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="9">Нет броней.</td>
+                    <td colspan="10">Нет броней.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
-        aria-hidden="true">
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -230,12 +213,10 @@ $bookings_result = $conn->query($bookings_sql);
                         </div>
                         <div class="form-group">
                             <label for="edit_price_per_passenger">Цена за пассажира:</label>
-                            <input type="number" class="form-control" id="edit_price_per_passenger"
-                                name="price_per_passenger" required>
+                            <input type="number" class="form-control" id="edit_price_per_passenger" name="price_per_passenger" required>
                         </div>
                         <input type="hidden" id="edit_route_id" name="route_id">
-                        <button type="button" class="btn btn-primary" onclick="updateRoute()">Сохранить
-                            изменения</button>
+                        <button type="button" class="btn btn-primary" onclick="updateRoute()">Сохранить изменения</button>
                     </form>
                 </div>
             </div>
@@ -266,8 +247,7 @@ $bookings_result = $conn->query($bookings_sql);
                     location.reload();
                 }
             };
-            xhr.send("route_id=" + routeId + "&country_name=" + encodeURIComponent(countryName) +
-                "&route_name=" + encodeURIComponent(routeName) + "&price_per_passenger=" + price);
+            xhr.send("route_id=" + routeId + "&country_name=" + encodeURIComponent(countryName) + "&route_name=" + encodeURIComponent(routeName) + "&price_per_passenger=" + price);
             $('#editModal').modal('hide');
         }
 
@@ -283,6 +263,36 @@ $bookings_result = $conn->query($bookings_sql);
                     }
                 };
                 xhr.send("route_id=" + routeId);
+            }
+        }
+
+        function deleteCaller(callerId) {
+            if (confirm("Вы уверены, что хотите удалить этот звонок?")) {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "db/delete_caller.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        alert(xhr.responseText);
+                        location.reload();
+                    }
+                };
+                xhr.send("caller_id=" + callerId);
+            }
+        }
+
+        function deleteBooking(bookingId) {
+            if (confirm("Вы уверены, что хотите удалить это бронирование?")) {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "db/delete_booking.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        alert(xhr.responseText);
+                        location.reload();
+                    }
+                };
+                xhr.send("booking_id=" + bookingId);
             }
         }
     </script>
