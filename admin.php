@@ -254,7 +254,7 @@ $bookings_result = $conn->query($bookings_sql);
         function deleteRoute(routeId) {
             if (confirm("Вы уверены, что хотите удалить этот маршрут?")) {
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", "db/delete_route.php", true);
+                xhr.open("POST", "admin_DB.php", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -269,7 +269,7 @@ $bookings_result = $conn->query($bookings_sql);
         function deleteCaller(callerId) {
             if (confirm("Вы уверены, что хотите удалить этот звонок?")) {
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", "db/delete_caller.php", true);
+                xhr.open("POST", "admin_DB.php", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -284,7 +284,7 @@ $bookings_result = $conn->query($bookings_sql);
         function deleteBooking(bookingId) {
             if (confirm("Вы уверены, что хотите удалить это бронирование?")) {
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", "db/delete_booking.php", true);
+                xhr.open("POST", "admin_DB.php", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -296,7 +296,6 @@ $bookings_result = $conn->query($bookings_sql);
             }
         }
     </script>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

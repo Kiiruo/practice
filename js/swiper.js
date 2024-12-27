@@ -12,7 +12,10 @@ new Swiper('.card-wrapper', {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
-
+  autoplay:{
+    delay:3000,
+    disableOnInteraction: true,
+  },
   breakpoints:{
     0:{
       slidesPerView:1
